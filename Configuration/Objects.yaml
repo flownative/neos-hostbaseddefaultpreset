@@ -1,0 +1,2 @@
+'Neos\Neos\Domain\Service\ContentDimensionPresetSourceInterface':
+  className: 'Flownative\Neos\HostBasedDefaultPreset\Service\ConfigurationContentDimensionPresetSource'
