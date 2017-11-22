@@ -1,4 +1,5 @@
 Flownative:
   Neos:
     HostBasedDefaultPreset:
+      forceEmptyUriSegment: false
       dimensions: []

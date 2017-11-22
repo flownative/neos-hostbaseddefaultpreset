@@ -31,6 +31,12 @@ class ConfigurationContentDimensionPresetSource extends NeosConfigurationContent
     protected $configuration;
 
     /**
+     * @Flow\InjectConfiguration(path="forceEmptyUriSegment")
+     * @var array
+     */
+    protected $forceEmptyUriSegment;
+
+    /**
      * @Flow\InjectConfiguration(path="dimensions")
      * @var array
      */
@@ -42,6 +48,11 @@ class ConfigurationContentDimensionPresetSource extends NeosConfigurationContent
      */
     protected $bootstrap;
 
+    /**
+     * Adjusts the incoming configuration as needed when the object is instantiated.
+     *
+     * @return void
+     */
     protected function initializeObject()
     {
         if ($this->dimensionsSettings === []) {
@@ -58,7 +69,13 @@ class ConfigurationContentDimensionPresetSource extends NeosConfigurationContent
                     $this->dimensionsSettings[$dimensionName],
                     $this->dimensionsSettings[$dimensionName]['defaultPresetByHost'][$requestedHost]
                 )) {
-                    $dimensionConfiguration['defaultPreset'] = $this->dimensionsSettings[$dimensionName]['defaultPresetByHost'][$requestedHost];
+                    $newDefaultPreset = $this->dimensionsSettings[$dimensionName]['defaultPresetByHost'][$requestedHost];
+
+                    $dimensionConfiguration['defaultPreset'] = $newDefaultPreset;
+
+                    if ($this->forceEmptyUriSegment === true) {
+                        $dimensionConfiguration['presets'][$newDefaultPreset]['uriSegment'] = '';
+                    }
                 }
             }
         }
