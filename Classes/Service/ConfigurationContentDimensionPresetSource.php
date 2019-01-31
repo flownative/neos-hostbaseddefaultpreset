@@ -73,6 +73,13 @@ class ConfigurationContentDimensionPresetSource extends NeosConfigurationContent
 
                     $dimensionConfiguration['defaultPreset'] = $newDefaultPreset;
 
+                    if (isset(
+                        $dimensionConfiguration['presets'][$newDefaultPreset],
+                        $dimensionConfiguration['presets'][$newDefaultPreset]['values']
+                    )) {
+                        $dimensionConfiguration['default'] = implode(',', $dimensionConfiguration['presets'][$newDefaultPreset]['values']);
+                    }
+
                     if ($this->forceEmptyUriSegment === true) {
                         $dimensionConfiguration['presets'][$newDefaultPreset]['uriSegment'] = '';
                     }
